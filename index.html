@@ -1,8 +1,760 @@
-<p>Hello 大家好</p>
-<p>我是霸都丶傲天，这是我的个人网站。 </p>
-<p>很高兴你来到这里, 你可以在以下的网站找到我</p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>虾仁月亮的个人主页</title>
+    <!-- 引入Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 引入Font Awesome -->
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 配置Tailwind自定义颜色和字体 -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B8B',
+                        secondary: '#6B7280',
+                        accent: '#FBBF24',
+                        dark: {
+                            primary: '#374151',
+                            secondary: '#1F2937',
+                            accent: '#D1D5DB'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- 自定义工具类 -->
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto {
+                content-visibility: auto;
+            }
+            .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+            }
+            .text-shadow {
+                text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+    
+    <style>
+        /* 基础动画定义 */
+        .fade-enter {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        .fade-enter-active {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 300ms, transform 300ms;
+        }
+        
+        /* 轮播图动画 */
+        .carousel-slide {
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
 
-<ul>
-  <li> <a href="https://www.zhihu.com/people/AJLoveChina">知乎</a> </li>
-  <li> <a href="http://hejie.nigeerhuo.com">我的博客(已经不更细了,现在在知乎写文章)</a> </li>
-</ul>
+<body class="font-sans bg-gray-50 text-gray-800 dark:bg-dark-secondary dark:text-gray-100 transition-colors duration-300 min-h-screen flex flex-col">
+    <div class="flex flex-1 overflow-hidden">
+        <!-- 左侧导航栏 -->
+        <aside class="w-64 bg-white dark:bg-dark-primary shadow-lg z-10 hidden md:block transition-all duration-300">
+            <div class="p-6 h-full flex flex-col">
+                <!-- 导航标题 -->
+                <div class="mb-8 text-center">
+                    <h1 class="text-2xl font-bold text-primary">虾仁月亮</h1>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">个人作品集</p>
+                </div>
+                
+                <!-- 导航菜单 -->
+                <nav class="flex-1">
+                    <ul class="space-y-1">
+                        <!-- 关于我 -->
+                        <li>
+                            <a href="#about" class="nav-link flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" data-target="about">
+                                <i class="fa fa-user-circle mr-3 text-primary"></i>
+                                <span>关于我～</span>
+                            </a>
+                        </li>
+                        
+                        <!-- 我的作品 -->
+                        <li>
+                            <button class="w-full flex items-center justify-between px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" id="works-toggle">
+                                <div class="flex items-center">
+                                    <i class="fa fa-th-large mr-3 text-primary"></i>
+                                    <span>我的作品</span>
+                                </div>
+                                <i class="fa fa-chevron-down text-xs transition-transform duration-200" id="works-chevron"></i>
+                            </button>
+                            <ul class="pl-10 mt-1 space-y-1 hidden" id="works-submenu">
+                                <li>
+                                    <a href="#works" class="nav-link block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" data-target="works" data-category="architecture">
+                                        建筑
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#works" class="nav-link block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" data-target="works" data-category="drawing">
+                                        画画
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#works" class="nav-link block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" data-target="works" data-category="music">
+                                        音乐
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#works" class="nav-link block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" data-target="works" data-category="podcast">
+                                        播客
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#works" class="nav-link block px-4 py-2 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" data-target="works" data-category="app">
+                                        APP
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <!-- 联系我 -->
+                        <li>
+                            <a href="#contact" class="nav-link flex items-center px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200" data-target="contact">
+                                <i class="fa fa-envelope mr-3 text-primary"></i>
+                                <span>联系我～</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <!-- 深色模式切换 -->
+                <div class="mt-auto pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <button id="dark-mode-toggle" class="flex items-center justify-center w-full px-4 py-3 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors duration-200">
+                        <i class="fa fa-moon-o mr-3 text-primary" id="dark-mode-icon"></i>
+                        <span id="dark-mode-text">深色模式</span>
+                    </button>
+                </div>
+                
+                <!-- 移动端菜单按钮 -->
+                <button id="mobile-menu-btn" class="md:hidden absolute top-4 right-4 text-gray-700 dark:text-gray-200 focus:outline-none">
+                    <i class="fa fa-bars text-xl"></i>
+                </button>
+            </div>
+        </aside>
+        
+        <!-- 右侧内容区域 -->
+        <main class="flex-1 overflow-y-auto bg-gray-50 dark:bg-dark-secondary transition-colors duration-300">
+            <div class="container mx-auto p-6 md:p-10">
+                <!-- 关于我模块 -->
+                <section id="about-section" class="content-section">
+                    <div class="max-w-4xl mx-auto">
+                        <!-- 头部区域 -->
+                        <div class="text-center mb-12">
+                            <div class="relative inline-block mb-6">
+                                <div class="w-36 h-36 rounded-full overflow-hidden border-4 border-primary shadow-lg mx-auto">
+                                    <img src="https://picsum.photos/seed/profile/200/200" alt="虾仁月亮的头像" class="w-full h-full object-cover">
+                                </div>
+                                <div class="absolute -bottom-2 -right-2 bg-accent text-white rounded-full w-10 h-10 flex items-center justify-center shadow-md">
+                                    <i class="fa fa-star"></i>
+                                </div>
+                            </div>
+                            <h2 class="text-4xl font-bold mb-4 text-shadow">虾仁月亮</h2>
+                            <p class="text-lg text-gray-600 dark:text-gray-300 leading-relaxed">
+                                NUU 本硕建筑系，现已跑路得物 / 字节 / 腾讯 PM~ 喜欢穿吊带、卡通画、偶尔弹唱！一只摇摆的 infp~
+                            </p>
+                        </div>
+                        
+                        <!-- 社交平台展示区 -->
+                        <div class="mb-12">
+                            <h3 class="text-2xl font-semibold mb-6 flex items-center">
+                                <i class="fa fa-link text-primary mr-3"></i>
+                                社交平台
+                            </h3>
+                            <div class="relative">
+                                <div class="overflow-x-auto scrollbar-hide pb-4">
+                                    <div class="flex space-x-4 min-w-max">
+                                        <!-- 小红书 -->
+                                        <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-5 w-48 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center mb-3">
+                                                <i class="fa fa-book text-red-500 text-xl mr-2"></i>
+                                                <h4 class="font-semibold">小红书</h4>
+                                            </div>
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">-12.5k 粉丝</p>
+                                        </div>
+                                        
+                                        <!-- 公众号 -->
+                                        <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-5 w-48 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center mb-3">
+                                                <i class="fa fa-weixin text-green-500 text-xl mr-2"></i>
+                                                <h4 class="font-semibold">公众号</h4>
+                                            </div>
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">-8.3k 粉丝</p>
+                                        </div>
+                                        
+                                        <!-- 视频号 -->
+                                        <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-5 w-48 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center mb-3">
+                                                <i class="fa fa-play-circle text-green-600 text-xl mr-2"></i>
+                                                <h4 class="font-semibold">视频号</h4>
+                                            </div>
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">-5.7k 粉丝</p>
+                                        </div>
+                                        
+                                        <!-- 抖音 -->
+                                        <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-5 w-48 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center mb-3">
+                                                <i class="fa fa-music text-red-600 text-xl mr-2"></i>
+                                                <h4 class="font-semibold">抖音</h4>
+                                            </div>
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">-23.1k 粉丝</p>
+                                        </div>
+                                        
+                                        <!-- 小宇宙 -->
+                                        <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-5 w-48 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center mb-3">
+                                                <i class="fa fa-headphones text-purple-500 text-xl mr-2"></i>
+                                                <h4 class="font-semibold">小宇宙</h4>
+                                            </div>
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">-3.2k 粉丝</p>
+                                        </div>
+                                        
+                                        <!-- 网易云 -->
+                                        <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-5 w-48 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                            <div class="flex items-center mb-3">
+                                                <i class="fa fa-cloud text-red-400 text-xl mr-2"></i>
+                                                <h4 class="font-semibold">网易云</h4>
+                                            </div>
+                                            <p class="text-gray-500 dark:text-gray-400 text-sm">-6.8k 粉丝</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- 滚动提示 -->
+                                <div class="hidden md:block absolute right-0 top-1/2 -translate-y-1/2 bg-black/20 dark:bg-white/10 text-white dark:text-gray-800 rounded-full w-10 h-10 flex items-center justify-center backdrop-blur-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 我的作品模块 -->
+                <section id="works-section" class="content-section hidden">
+                    <div class="max-w-5xl mx-auto">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center">
+                            <i class="fa fa-th-large text-primary mr-3"></i>
+                            我的作品
+                        </h2>
+                        
+                        <!-- 分类导航 -->
+                        <div class="mb-8 overflow-x-auto scrollbar-hide">
+                            <div class="flex space-x-2 min-w-max pb-2">
+                                <button class="works-category-btn px-5 py-2 rounded-full bg-primary text-white font-medium" data-category="architecture">
+                                    建筑
+                                </button>
+                                <button class="works-category-btn px-5 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="drawing">
+                                    画画
+                                </button>
+                                <button class="works-category-btn px-5 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="music">
+                                    音乐
+                                </button>
+                                <button class="works-category-btn px-5 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="podcast">
+                                    播客
+                                </button>
+                                <button class="works-category-btn px-5 py-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors" data-category="app">
+                                    APP
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- 轮播图展示区 -->
+                        <div class="relative bg-white dark:bg-dark-primary rounded-2xl shadow-lg overflow-hidden">
+                            <!-- 建筑作品轮播 -->
+                            <div class="works-carousel" data-category="architecture">
+                                <div class="carousel-container relative h-[400px] md:h-[500px]">
+                                    <div class="carousel-slides flex h-full">
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/architecture1/1200/800" alt="建筑作品1：现代风格住宅" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/architecture2/1200/800" alt="建筑作品2：公共图书馆设计" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/architecture3/1200/800" alt="建筑作品3：城市规划模型" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/architecture4/1200/800" alt="建筑作品4：生态办公楼" class="w-full h-full object-cover">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 轮播控制按钮 -->
+                                    <button class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>
+                                    <button class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                    
+                                    <!-- 轮播指示器 -->
+                                    <div class="carousel-indicators absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-100"></button>
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                                    </div>
+                                    
+                                    <!-- 作品标题 -->
+                                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                                        <h3 class="text-xl font-semibold">现代风格住宅设计</h3>
+                                        <p class="text-sm opacity-90">毕业设计作品 · 2020</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 画画作品轮播 -->
+                            <div class="works-carousel hidden" data-category="drawing">
+                                <div class="carousel-container relative h-[400px] md:h-[500px]">
+                                    <div class="carousel-slides flex h-full">
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/drawing1/1200/800" alt="绘画作品1：卡通人物" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/drawing2/1200/800" alt="绘画作品2：风景速写" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/drawing3/1200/800" alt="绘画作品3：插画创作" class="w-full h-full object-cover">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 轮播控制按钮 -->
+                                    <button class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>
+                                    <button class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                    
+                                    <!-- 轮播指示器 -->
+                                    <div class="carousel-indicators absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-100"></button>
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                                    </div>
+                                    
+                                    <!-- 作品标题 -->
+                                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                                        <h3 class="text-xl font-semibold">卡通人物系列</h3>
+                                        <p class="text-sm opacity-90">日常创作 · 2021</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 音乐作品轮播 -->
+                            <div class="works-carousel hidden" data-category="music">
+                                <div class="carousel-container relative h-[400px] md:h-[500px] bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                    <div class="text-center p-8">
+                                        <i class="fa fa-music text-6xl text-primary mb-4"></i>
+                                        <h3 class="text-2xl font-semibold mb-2">吉他弹唱合集</h3>
+                                        <p class="text-gray-600 dark:text-gray-300 mb-6">原创与翻唱作品</p>
+                                        <button class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-colors">
+                                            <i class="fa fa-play mr-2"></i>播放全部
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- 轮播控制按钮 -->
+                                    <button class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>
+                                    <button class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                    
+                                    <!-- 轮播指示器 -->
+                                    <div class="carousel-indicators absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                                        <button class="w-3 h-3 rounded-full bg-gray-700 dark:bg-gray-300 opacity-100"></button>
+                                        <button class="w-3 h-3 rounded-full bg-gray-700 dark:bg-gray-300 opacity-50"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- 播客作品轮播 -->
+                            <div class="works-carousel hidden" data-category="podcast">
+                                <div class="carousel-container relative h-[400px] md:h-[500px] bg-gray-900 flex items-center justify-center">
+                                    <div class="text-center p-8 text-white">
+                                        <i class="fa fa-microphone text-6xl text-primary mb-4"></i>
+                                        <h3 class="text-2xl font-semibold mb-2">设计与生活</h3>
+                                        <p class="text-gray-300 mb-6">聊聊建筑、设计与转行的那些事</p>
+                                        <button class="bg-primary hover:bg-primary/90 text-white px-6 py-3 rounded-full transition-colors">
+                                            <i class="fa fa-headphones mr-2"></i>收听节目
+                                        </button>
+                                    </div>
+                                    
+                                    <!-- 轮播控制按钮 -->
+                                    <button class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>
+                                    <button class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                    
+                                    <!-- 轮播指示器 -->
+                                    <div class="carousel-indicators absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-100"></button>
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- APP作品轮播 -->
+                            <div class="works-carousel hidden" data-category="app">
+                                <div class="carousel-container relative h-[400px] md:h-[500px]">
+                                    <div class="carousel-slides flex h-full">
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/app1/1200/800" alt="APP作品1：设计灵感库" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="carousel-slide min-w-full">
+                                            <img src="https://picsum.photos/seed/app2/1200/800" alt="APP作品2：建筑材料手册" class="w-full h-full object-cover">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 轮播控制按钮 -->
+                                    <button class="carousel-prev absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>
+                                    <button class="carousel-next absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/30 hover:bg-black/50 text-white rounded-full flex items-center justify-center backdrop-blur-sm transition-colors">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                    
+                                    <!-- 轮播指示器 -->
+                                    <div class="carousel-indicators absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-100"></button>
+                                        <button class="w-3 h-3 rounded-full bg-white opacity-50"></button>
+                                    </div>
+                                    
+                                    <!-- 作品标题 -->
+                                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/70 to-transparent p-6 text-white">
+                                        <h3 class="text-xl font-semibold">设计灵感库 APP</h3>
+                                        <p class="text-sm opacity-90">产品设计 · 2022</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- 联系我模块 -->
+                <section id="contact-section" class="content-section hidden">
+                    <div class="max-w-4xl mx-auto">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center">
+                            <i class="fa fa-envelope text-primary mr-3"></i>
+                            联系我～
+                        </h2>
+                        
+                        <!-- 联系方式展示 -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                            <!-- 邮箱 -->
+                            <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fa fa-envelope text-primary text-xl"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg mb-2">邮箱</h3>
+                                <p class="text-gray-600 dark:text-gray-300">1093025042@qq.com</p>
+                            </div>
+                            
+                            <!-- QQ -->
+                            <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fa fa-qq text-primary text-xl"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg mb-2">QQ</h3>
+                                <p class="text-gray-600 dark:text-gray-300">1093025042</p>
+                            </div>
+                            
+                            <!-- 微信 -->
+                            <div class="bg-white dark:bg-dark-primary rounded-xl shadow-md p-6 transform transition-transform duration-300 hover:scale-105 hover:shadow-lg">
+                                <div class="w-12 h-12 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mb-4">
+                                    <i class="fa fa-weixin text-primary text-xl"></i>
+                                </div>
+                                <h3 class="font-semibold text-lg mb-2">微信</h3>
+                                <p class="text-gray-600 dark:text-gray-300">15062832453</p>
+                            </div>
+                        </div>
+                        
+                        <!-- 粉丝互动区 -->
+                        <div class="bg-gradient-to-r from-pink-400 to-primary rounded-2xl shadow-lg overflow-hidden">
+                            <div class="p-8 md:p-10 text-white">
+                                <h3 class="text-2xl font-bold mb-4">请虾仁喝杯奶茶！</h3>
+                                <p class="mb-6 opacity-90">你的支持是我创作的动力～</p>
+                                
+                                <div class="flex flex-wrap gap-4">
+                                    <button class="bg-white text-primary hover:bg-gray-100 px-6 py-3 rounded-full font-medium transition-colors flex items-center">
+                                        <i class="fa fa-credit-card mr-2"></i>
+                                        支付宝支付
+                                    </button>
+                                    <button class="bg-white text-primary hover:bg-gray-100 px-6 py-3 rounded-full font-medium transition-colors flex items-center">
+                                        <i class="fa fa-weixin mr-2"></i>
+                                        微信支付
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 导航菜单切换
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // 获取目标区域
+                    const target = this.getAttribute('data-target');
+                    const category = this.getAttribute('data-category');
+                    
+                    // 隐藏所有内容区域
+                    contentSections.forEach(section => {
+                        section.classList.add('hidden');
+                    });
+                    
+                    // 显示目标区域
+                    document.getElementById(`${target}-section`).classList.remove('hidden');
+                    
+                    // 如果是作品区域且有分类，切换到对应分类
+                    if (target === 'works' && category) {
+                        switchWorksCategory(category);
+                    }
+                    
+                    // 移动端菜单自动关闭
+                    if (window.innerWidth < 768) {
+                        document.querySelector('aside').classList.add('hidden');
+                    }
+                });
+            });
+            
+            // 作品子菜单切换
+            const worksToggle = document.getElementById('works-toggle');
+            const worksSubmenu = document.getElementById('works-submenu');
+            const worksChevron = document.getElementById('works-chevron');
+            
+            worksToggle.addEventListener('click', function() {
+                worksSubmenu.classList.toggle('hidden');
+                worksChevron.classList.toggle('rotate-180');
+            });
+            
+            // 作品分类切换
+            const categoryBtns = document.querySelectorAll('.works-category-btn');
+            
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    switchWorksCategory(category);
+                });
+            });
+            
+            function switchWorksCategory(category) {
+                // 隐藏所有轮播
+                const carousels = document.querySelectorAll('.works-carousel');
+                carousels.forEach(carousel => {
+                    carousel.classList.add('hidden');
+                });
+                
+                // 显示选中的轮播
+                document.querySelector(`.works-carousel[data-category="${category}"]`).classList.remove('hidden');
+                
+                // 更新按钮样式
+                categoryBtns.forEach(btn => {
+                    btn.classList.remove('bg-primary', 'text-white');
+                    btn.classList.add('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-200');
+                });
+                
+                const activeBtn = document.querySelector(`.works-category-btn[data-category="${category}"]`);
+                activeBtn.classList.remove('bg-gray-200', 'dark:bg-gray-700', 'text-gray-700', 'dark:text-gray-200');
+                activeBtn.classList.add('bg-primary', 'text-white');
+                
+                // 重置轮播
+                resetCarousel(document.querySelector(`.works-carousel[data-category="${category}"] .carousel-container`));
+            }
+            
+            // 轮播图功能
+            function setupCarousel(carouselContainer) {
+                const slidesContainer = carouselContainer.querySelector('.carousel-slides');
+                const slides = carouselContainer.querySelectorAll('.carousel-slide');
+                const prevBtn = carouselContainer.querySelector('.carousel-prev');
+                const nextBtn = carouselContainer.querySelector('.carousel-next');
+                const indicators = carouselContainer.querySelectorAll('.carousel-indicators button');
+                
+                let currentIndex = 0;
+                let slideInterval;
+                
+                // 设置自动轮播
+                function startSlideInterval() {
+                    slideInterval = setInterval(nextSlide, 4000); // 4秒切换一次
+                }
+                
+                // 停止自动轮播
+                function stopSlideInterval() {
+                    clearInterval(slideInterval);
+                }
+                
+                // 切换到下一张
+                function nextSlide() {
+                    currentIndex = (currentIndex + 1) % slides.length;
+                    updateSlidePosition();
+                }
+                
+                // 切换到上一张
+                function prevSlide() {
+                    currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+                    updateSlidePosition();
+                }
+                
+                // 更新轮播位置
+                function updateSlidePosition() {
+                    const slideWidth = slides[0].offsetWidth;
+                    slidesContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+                    
+                    // 更新指示器
+                    indicators.forEach((indicator, index) => {
+                        if (index === currentIndex) {
+                            indicator.classList.add('opacity-100');
+                            indicator.classList.remove('opacity-50');
+                        } else {
+                            indicator.classList.add('opacity-50');
+                            indicator.classList.remove('opacity-100');
+                        }
+                    });
+                }
+                
+                // 事件监听
+                prevBtn.addEventListener('click', () => {
+                    stopSlideInterval();
+                    prevSlide();
+                    startSlideInterval();
+                });
+                
+                nextBtn.addEventListener('click', () => {
+                    stopSlideInterval();
+                    nextSlide();
+                    startSlideInterval();
+                });
+                
+                indicators.forEach((indicator, index) => {
+                    indicator.addEventListener('click', () => {
+                        stopSlideInterval();
+                        currentIndex = index;
+                        updateSlidePosition();
+                        startSlideInterval();
+                    });
+                });
+                
+                // 鼠标悬停时停止轮播
+                carouselContainer.addEventListener('mouseenter', stopSlideInterval);
+                carouselContainer.addEventListener('mouseleave', startSlideInterval);
+                
+                // 初始化并开始轮播
+                startSlideInterval();
+                
+                // 窗口大小改变时重新计算位置
+                window.addEventListener('resize', updateSlidePosition);
+                
+                return {
+                    reset: function() {
+                        stopSlideInterval();
+                        currentIndex = 0;
+                        updateSlidePosition();
+                        startSlideInterval();
+                    }
+                };
+            }
+            
+            // 重置轮播
+            function resetCarousel(carouselContainer) {
+                if (carouselContainer.carouselInstance) {
+                    carouselContainer.carouselInstance.reset();
+                }
+            }
+            
+            // 初始化所有轮播
+            const carouselContainers = document.querySelectorAll('.carousel-container');
+            carouselContainers.forEach(container => {
+                container.carouselInstance = setupCarousel(container);
+            });
+            
+            // 深色模式切换
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            const darkModeIcon = document.getElementById('dark-mode-icon');
+            const darkModeText = document.getElementById('dark-mode-text');
+            
+            // 检查本地存储中的偏好设置
+            if (localStorage.getItem('darkMode') === 'true' || 
+                (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                updateDarkModeUI(true);
+            }
+            
+            darkModeToggle.addEventListener('click', function() {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('darkMode', isDark);
+                updateDarkModeUI(isDark);
+            });
+            
+            function updateDarkModeUI(isDark) {
+                if (isDark) {
+                    darkModeIcon.classList.remove('fa-moon-o');
+                    darkModeIcon.classList.add('fa-sun-o');
+                    darkModeText.textContent = '浅色模式';
+                } else {
+                    darkModeIcon.classList.remove('fa-sun-o');
+                    darkModeIcon.classList.add('fa-moon-o');
+                    darkModeText.textContent = '深色模式';
+                }
+            }
+            
+            // 移动端菜单
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const aside = document.querySelector('aside');
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    aside.classList.toggle('hidden');
+                    aside.classList.toggle('absolute');
+                    aside.classList.toggle('inset-0');
+                    aside.classList.toggle('w-full');
+                    aside.classList.toggle('h-full');
+                });
+            }
+            
+            // 初始显示关于我页面
+            document.getElementById('about-section').classList.remove('hidden');
+        });
+    </script>
+</body>
+</html>
